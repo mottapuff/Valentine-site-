@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ffd6e8;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+h1 {
+  color: #ff3b7a;
+  font-size: 28px;
+  margin: 20px 0;
+}
+
+/* INTRO VIDEO */
+.intro-video {
+  width: 65%;
+  max-width: 260px;
+  border-radius: 18px;
+  margin: 0 auto 15px;
+  display: block;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+button {
+  padding: 14px 26px;
+  font-size: 18px;
+  border: none;
+  border-radius: 14px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/* YES BUTTON */
+#yesBtn {
+  background: #ff2f6d;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 6px 15px rgba(255,47,109,0.5);
+}
+
+/* NO BUTTON */
+#noBtn {
+  background: #aaa;
+  color: white;
+  position: absolute;
+  border-radius: 14px;
+}
+
+/* FINAL VIDEO */
+video.final {
+  width: 90%;
+  max-width: 360px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* FLOATING ITEMS */
+.float {
+  position: fixed;
+  bottom: -30px;
+  animation: floatUp 7s linear infinite;
+  opacity: 0.9;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-120vh);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="shade.mp3" type="audio/mpeg">
+</audio>
+
+<!-- FIRST SCREEN -->
+<div class="container" id="questionBox">
+
+  <video class="intro-video" autoplay muted loop playsinline>
+    <source src="intro.mp4" type="video/mp4">
+  </video>
+
+  <h1>Will you be my Valentine? 💕</h1>
+
+  <button id="yesBtn">YES 😍</button>
+  <button id="noBtn">NO 🥲</button>
+</div>
+
+<!-- FINAL SCREEN -->
+<div class="container" id="finalBox" style="display:none;">
+  <h1>I knew my shundaapi baby will say yes 🙈 💖</h1>
+  <video class="final" controls autoplay playsinline>
+    <source src="vedio.mp4" type="video/mp4">
+  </video>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const questionBox = document.getElementById("questionBox");
+const finalBox = document.getElementById("finalBox");
+const music = document.getElementById("bgMusic");
+
+/* NO BUTTON MOVES */
+function moveNo() {
+  const x = Math.random() * (window.innerWidth - 100);
+  const y = Math.random() * (window.innerHeight - 100);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+}
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+/* YES BUTTON */
+yesBtn.addEventListener("click", () => {
+  questionBox.style.display = "none";
+  finalBox.style.display = "block";
+  music.play();
+});
+
+/* START MUSIC ON FIRST TAP */
+document.body.addEventListener("click", () => {
+  music.play();
+}, { once: true });
+
+/* FLOATING HEARTS, ROSES & LILIES */
+const symbols = ["❤️", "🌹", "🌸"];
+
+setInterval(() => {
+  const item = document.createElement("div");
+  item.className = "float";
+  item.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+  item.style.left = Math.random() * 100 + "vw";
+  item.style.fontSize = (18 + Math.random() * 22) + "px";
+  document.body.appendChild(item);
+
+  setTimeout(() => {
+    item.remove();
+  }, 7000);
+}, 350);
+</script>
+
+</body>
+</html>
